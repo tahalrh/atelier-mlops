@@ -27,7 +27,9 @@ X_train, X_test, y_train, y_test = train_test_split(
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
 mlflow.set_experiment("TP_Iris_Classification")
 
-with mlflow.start_run(run_name="RandomForest_Iris"):
+with mlflow.start_run(
+    run_name=f"RandomForest_{params['n_estimators']}_depth_{params['max_depth']}"
+):
     model = RandomForestClassifier(
         n_estimators=params["n_estimators"],
         max_depth=params["max_depth"],
@@ -43,6 +45,7 @@ with mlflow.start_run(run_name="RandomForest_Iris"):
         "f1_score": f1_score(y_test, predictions, average="weighted"),
     }
 
+    mlflow.log_param("estimator", "RandomForestClassifier")
     mlflow.log_params(params)
     mlflow.log_metrics(metrics)
 
