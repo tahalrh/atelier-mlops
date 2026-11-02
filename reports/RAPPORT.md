@@ -15,17 +15,31 @@ Ce TP montre comment construire un projet Machine Learning versionné et reprodu
 
 ---
 
-## 2. Ce qui a été réalisé
+## 2. Versionnement Git
 
-- Git : branches `main` et `develop`, tags `v1.0` et `v2.0`, dépôt publié sur GitHub.
-- DVC : datasets Iris et Wine versionnés, remote local configuré, pipeline `train` exécuté.
-- MLflow : plusieurs runs enregistrés avec paramètres, métriques et modèles.
-- Restauration : retour au tag `v1.0` avec `git checkout` puis `dvc checkout`.
-- Reproduction : clone du dépôt, `dvc pull`, `dvc repro --force` et vérification des métriques.
+![Historique Git](git_log.png)
+
+**Description :** l’historique Git montre les différentes étapes du projet, les branches `main` et `develop`, ainsi que les tags `v1.0` et `v2.0`.
 
 ---
 
-## 3. Comparaison RandomForest et KNN
+## 3. Données et pipeline DVC
+
+![Pipeline DVC](dvc_dag.png)
+
+**Description :** les datasets Iris et Wine sont versionnés avec DVC. Le pipeline contient une étape `train` qui produit le modèle et les métriques.
+
+---
+
+## 4. Dépôt GitHub
+
+![Dépôt GitHub](github_repo.png)
+
+**Description :** le projet est publié sur GitHub avec deux branches et deux tags. Le dépôt contient le code, les fichiers DVC, les paramètres et les résultats.
+
+---
+
+## 5. Comparaison RandomForest et KNN
 
 ![Comparaison RandomForest et KNN](mlflow_comparaison.png)
 
@@ -33,7 +47,7 @@ Ce TP montre comment construire un projet Machine Learning versionné et reprodu
 
 ---
 
-## 4. Comparaison des trois expériences
+## 6. Comparaison des trois expériences
 
 ![Comparaison de trois runs](mlflow_3_runs.png)
 
@@ -47,7 +61,7 @@ Ce résultat montre qu’augmenter le nombre d’arbres et la profondeur ne gara
 
 ---
 
-## 5. Restauration de la version v1.0
+## 7. Restauration de la version v1.0
 
 ![Restauration de la version v1.0](restauration_v1.png)
 
@@ -61,7 +75,7 @@ Le modèle rechargé prédit correctement la classe `setosa`.
 
 ---
 
-## 6. Reproduction dans un clone
+## 8. Reproduction dans un clone
 
 ![Reproduction dans le clone](reproduction_clone.png)
 
@@ -78,7 +92,7 @@ Cela montre que le projet est reproductible.
 
 ---
 
-## 7. Résultats
+## 9. Résultats
 
 | Modèle | Paramètres | Accuracy | F1-score |
 |---|---|---:|---:|
@@ -88,7 +102,7 @@ Cela montre que le projet est reproductible.
 
 ---
 
-## 8. Conclusion
+## 10. Conclusion
 
 Git permet de versionner le code, DVC permet de versionner les données et le pipeline, et MLflow permet de suivre et comparer les expériences.
 
