@@ -1,98 +1,75 @@
-# Rapport — Atelier Git + DVC + MLflow
+# Rapport : Atelier Git + DVC + MLflow
 
-**Projet :** classification du dataset Iris avec RandomForest et KNN  
-**Dépôt GitHub :** https://github.com/tahalrh/atelier-mlops
-
----
+**Projet :** classification du dataset Iris avec RandomForest et KNN
+**Dépôt :** https://github.com/tahalrh/atelier-mlops
 
 ## 1. Objectif
 
-Ce TP montre comment construire un projet Machine Learning versionné et reproductible avec :
+Ce rapport présente la mise en place d'un projet de Machine Learning versionné, traçable et reproductible. Trois outils sont utilisés : Git pour le code, DVC pour les données et le pipeline, MLflow pour le suivi des expériences.
 
-- **Git** pour versionner le code ;
-- **DVC** pour versionner les données et le pipeline ;
-- **MLflow** pour suivre les expériences et comparer les modèles.
+Le projet repose sur le dataset Iris et compare un classifieur RandomForest à un classifieur KNN.
 
----
+## 2. Versionnement du code avec Git
 
-## 2. Versionnement Git
+Le dépôt Git contient deux branches, `main` et `develop`, ainsi que deux tags, `v1.0` et `v2.0`. La figure suivante présente l'historique des commits.
 
-![Historique Git](git_log.png)
+![Figure 1 : Historique des commits du dépôt](git_log.png)
 
-**Description :** l’historique Git montre les différentes étapes du projet, les branches `main` et `develop`, ainsi que les tags `v1.0` et `v2.0`.
+L'historique montre les différentes étapes du projet, les branches `main` et `develop`, ainsi que les tags `v1.0` et `v2.0`.
 
----
+## 3. Versionnement des données avec DVC
 
-## 3. Données et pipeline DVC
+DVC prend en charge les fichiers volumineux et la description du pipeline. Les datasets Iris et Wine sont versionnés de cette manière.
 
-![Pipeline DVC](dvc_dag.png)
+![Figure 2 : Pipeline DVC](dvc_dag.png)
 
-**Description :** les datasets Iris et Wine sont versionnés avec DVC. Le pipeline contient une étape `train` qui produit le modèle et les métriques.
+Le pipeline contient une étape `train` qui produit le modèle et les métriques à partir du dataset versionné.
 
----
+## 4. Publication sur GitHub
 
-## 4. Dépôt GitHub
+Le projet est publié sur GitHub. Le dépôt contient le code source, les fichiers DVC, les paramètres et les résultats des expériences.
 
-![Dépôt GitHub](github_repo.png)
+![Figure 3 : Dépôt du projet sur GitHub](github_repo.png)
 
-**Description :** le projet est publié sur GitHub avec deux branches et deux tags. Le dépôt contient le code, les fichiers DVC, les paramètres et les résultats.
+Le dépôt présente deux branches et deux tags. L'ensemble du projet est accessible depuis cette page.
 
----
+## 5. Comparaison de deux modèles avec MLflow
 
-## 5. Comparaison RandomForest et KNN
+MLflow enregistre pour chaque exécution les paramètres, les métriques et le modèle produit. La figure suivante compare un RandomForest à un KNN.
 
-![Comparaison RandomForest et KNN](mlflow_comparaison.png)
+![Figure 4 : Comparaison du RandomForest et du KNN](mlflow_comparaison.png)
 
-**Description :** comparaison de deux runs MLflow. KNN obtient une accuracy de **1,0**, contre **0,9333** pour le RandomForest baseline.
+Le KNN obtient une accuracy de 1,0, contre 0,9333 pour le RandomForest de référence.
 
----
+## 6. Comparaison de trois expériences
 
-## 6. Comparaison des trois expériences
+Une deuxième expérience fait varier les paramètres du RandomForest. Les trois exécutions sont comparées dans MLflow.
 
-![Comparaison de trois runs](mlflow_3_runs.png)
+![Figure 5 : Comparaison des trois exécutions](mlflow_3_runs.png)
 
-**Description :** comparaison de trois runs :
-
-- RandomForest 100 arbres / profondeur 5 : **0,9333**
-- RandomForest 200 arbres / profondeur 8 : **0,9**
-- KNN avec 5 voisins : **1,0**
-
-Ce résultat montre qu’augmenter le nombre d’arbres et la profondeur ne garantit pas une meilleure accuracy.
-
----
+Les résultats sont les suivants : RandomForest avec 100 arbres et une profondeur de 5 obtient 0,9333 ; RandomForest avec 200 arbres et une profondeur de 8 obtient 0,9 ; le KNN avec 5 voisins obtient 1,0. Augmenter le nombre d'arbres et la profondeur ne garantit donc pas une meilleure accuracy.
 
 ## 7. Restauration de la version v1.0
 
-![Restauration de la version v1.0](restauration_v1.png)
+Le retour au tag `v1.0` s'effectue avec `git checkout`, suivi de `dvc checkout`. Cette opération restaure les données, le modèle et les métriques de la version initiale.
 
-**Description :** retour au tag `v1.0` avec `git checkout v1.0` puis `dvc checkout`. Les métriques restaurées sont celles de la version baseline :
+![Figure 6 : Restauration des métriques de la version v1.0](restauration_v1.png)
 
-```text
-accuracy = 0.93333
-```
+Les métriques restaurées correspondent à la version de référence, avec une accuracy de 0,93333. Le modèle rechargé prédit correctement la classe `setosa`.
 
-Le modèle rechargé prédit correctement la classe `setosa`.
+## 8. Reproduction du projet dans un clone
 
----
+Pour vérifier la reproductibilité, le dépôt a été cloné dans un second dossier. Les données sont récupérées avec `dvc pull`, puis le pipeline est relancé avec `dvc repro --force`.
 
-## 8. Reproduction dans un clone
+![Figure 7 : Reproduction du pipeline dans un clone](reproduction_clone.png)
 
-![Reproduction dans le clone](reproduction_clone.png)
-
-**Description :** le projet a été cloné dans un autre dossier. Les données ont été récupérées avec `dvc pull`, puis le pipeline a été relancé avec `dvc repro --force`.
-
-Les métriques retrouvées sont :
-
-```text
-accuracy = 0.9
-f1_score = 0.89975
-```
-
-Cela montre que le projet est reproductible.
-
----
+Les métriques obtenues sont une accuracy de 0,9 et un F1-score de 0,89975. Le projet est donc reproductible à partir du dépôt et du stockage distant.
 
 ## 9. Résultats
+
+Le tableau 1 récapitule les performances obtenues pour les trois configurations testées.
+
+**Tableau 1 : Performances des modèles**
 
 | Modèle | Paramètres | Accuracy | F1-score |
 |---|---|---:|---:|
@@ -100,10 +77,8 @@ Cela montre que le projet est reproductible.
 | RandomForest | 200 arbres, profondeur 8 | 0,9 | 0,89975 |
 | KNN | 5 voisins | 1,0 | 1,0 |
 
----
-
 ## 10. Conclusion
 
-Git permet de versionner le code, DVC permet de versionner les données et le pipeline, et MLflow permet de suivre et comparer les expériences.
+Git permet de versionner le code, DVC permet de versionner les données et le pipeline, et MLflow permet de suivre et de comparer les expériences.
 
-La restauration d’une ancienne version et la reproduction du projet dans un clone fonctionnent correctement. Le pipeline est donc traçable, versionné et reproductible.
+La restauration d'une version antérieure et la reproduction du projet dans un clone fonctionnent correctement. Le pipeline est donc traçable, versionné et reproductible.
